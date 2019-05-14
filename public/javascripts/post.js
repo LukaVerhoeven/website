@@ -2,7 +2,7 @@
 //     type: "POST",
 //     url: "/users/signup",
 //     data: {
-//         email:"tesaat@test.com",
+//         email:"testing@test.com",
 //         password: "password"
 //     },
 //     success: function (data) {
@@ -14,7 +14,7 @@ $.ajax({
     type: "POST",
     url: "/users/login",
     data: {
-        email:"test@test.com",
+        email:"admin@test.com",
         password: "password"
     },
     success: function (data) {
@@ -32,7 +32,7 @@ function testAuth(token){
             Authorization: "Bearer " + token
         },
         data: {
-            email:"test@test.com",
+            // email:"user@test.com",
             // token: token
         },
         success: function (data) {

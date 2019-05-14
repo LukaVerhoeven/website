@@ -10,11 +10,10 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
-// console.log("ENV: ", process.env.test );
+// console.log("ENV: ", process.env.MONGO_ATLAS_PW );
 mongoose.connect(
     "mongodb://test:" +
-    // process.env.MONGO_ATLAS_PW +
-    "test" +
+    process.env.MONGO_ATLAS_PW +
     "@testcluster-shard-00-00-inqyi.mongodb.net:27017,testcluster-shard-00-01-inqyi.mongodb.net:27017,testcluster-shard-00-02-inqyi.mongodb.net:27017/test?ssl=true&replicaSet=TestCluster-shard-0&authSource=admin&retryWrites=true",
     {useNewUrlParser: true}
 );
