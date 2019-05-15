@@ -4,48 +4,47 @@ var mongoose  = require("mongoose");
 var jwt = require('jsonwebtoken');
 
 exports.register = (req, res, next) => {
-    User.find({email: req.body.email}).exec()
-        .then(user => {
-            console.log("409",  user);
-            if(user.length>0){
-                return res.status(409).json({
-                    message: "mail exists"
-                });
-            }
-            else{
-                bcrypt.hash(req.body.password, 10, (err,hash)=>{
-                    if(err){
-                        console.log("500",  err);
-                        return res.status(500).json({
-                            error: err
-                        })
-                    }else{
-                        console.log("201");
-                        const user = new User({
-                            _id: new mongoose.Types.ObjectId(),
-                            email: req.body.email,
-                            password: hash,
-                            role: 1
-                        });
-
-                        user.save()
-                            .then(result => {
-                                console.log(result);
-                                res.status(201).json({
-                                    message: "user created"
-                                })
+        User.find({email: req.body.email}).exec()
+            .then(user => {
+                console.log("409",  user);
+                if(user.length>0){
+                    return res.status(409).json({
+                        error: "This mail is already registered"
+                    });
+                }
+                else{
+                    bcrypt.hash(req.body.password, 10, (err,hash)=>{
+                        if(err){
+                            console.log("500",  err);
+                            return res.status(500).json({
+                                error: "Something went wrong, please try again."
                             })
-                            .catch(err => {
-                                console.log(err);
-                                res.status(500).json({
-                                    error: err
-                                });
+                        }else{
+                            console.log("201");
+                            const user = new User({
+                                _id: new mongoose.Types.ObjectId(),
+                                email: req.body.email,
+                                password: hash,
+                                role: 1
                             });
 
-                    }
-                });
-            }
-        });
+                            user.save()
+                                .then(result => {
+                                    console.log(result);
+                                    res.status(201).json({
+                                        message: "user created"
+                                    })
+                                })
+                                .catch(err => {
+                                    console.log(err);
+                                    res.status(500).json({
+                                        error: "Something went wrong, please try again."
+                                    });
+                                });
+                        }
+                    });
+                }
+            })
 };
 
 exports.login = (req, res, next) => {

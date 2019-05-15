@@ -25,4 +25,6 @@ $RECYCLE.BIN/
 # =========================
 # custom ignores
 # =========================
-node_modules
+/public
+/node_modules
+
